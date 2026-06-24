@@ -1,228 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>QA Testing Arcade Nivel 1 | Creado por Narciso</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@500;700;800;900&display=swap');
-:root{
-  --bg:#050016;--bg2:#120033;--panel:#0b102f;--panel2:#10195a;
-  --cyan:#21e8ff;--pink:#ff2bbd;--yellow:#ffe93b;--green:#45ff3d;
-  --orange:#ff8a00;--purple:#7b3cff;--white:#f7f7ff;--danger:#ff315a;
-  --muted:#b9c0ff;--shadow:#02020d;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;min-height:100vh;color:var(--white);font-family:Inter,system-ui,sans-serif;
-  background:
-    radial-gradient(circle at 12% 12%,rgba(255,43,189,.28),transparent 31%),
-    radial-gradient(circle at 84% 17%,rgba(33,232,255,.22),transparent 30%),
-    radial-gradient(circle at 50% 90%,rgba(123,60,255,.28),transparent 28%),
-    linear-gradient(180deg,#050016,#100031 68%,#180044);
-  display:grid;place-items:center;padding:16px;overflow-x:hidden;
-}
-body:before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:
-    linear-gradient(rgba(255,255,255,.035) 50%,rgba(0,0,0,.08) 50%),
-    radial-gradient(circle,rgba(255,255,255,.85) 1px,transparent 1.5px);
-  background-size:100% 4px,65px 65px;opacity:.42;animation:scan 8s linear infinite;
-}
-@keyframes scan{to{background-position:0 60px,130px 190px}}
-.arcade{
-  position:relative;z-index:2;width:min(460px,100%);border:5px solid #5965ff;outline:3px solid #030314;
-  border-radius:24px;background:linear-gradient(180deg,rgba(12,15,46,.97),rgba(5,0,23,.99));
-  box-shadow:0 0 0 5px rgba(255,43,189,.35),0 0 45px rgba(33,232,255,.30),0 28px 80px rgba(0,0,0,.78);
-  overflow:hidden;
-}
-.hud{
-  display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:18px 12px 14px;border-bottom:4px solid #5965ff;
-  background:#07091d;font-family:'Press Start 2P',monospace;font-size:8.5px;text-align:center;color:var(--cyan);
-}
-.hud strong{display:block;color:#fff;margin-top:8px;font-size:10px}.pink{color:var(--pink)}.yellow{color:var(--yellow)}
-.hero{text-align:center;padding:30px 16px 14px;position:relative}.star{position:absolute;font-family:'Press Start 2P';animation:twinkle 1.4s infinite alternate}.s1{left:24px;top:38px;color:var(--yellow)}.s2{right:26px;top:92px;color:var(--pink)}.s3{left:72px;bottom:10px;color:var(--cyan)}@keyframes twinkle{to{opacity:.25;transform:scale(.75)}}
-h1{margin:0;font-family:'Press Start 2P',monospace;font-size:41px;line-height:1.1;color:var(--yellow);text-shadow:4px 4px 0 var(--pink),8px 8px 0 #07104a;letter-spacing:-1px}
-h1 span{display:block;color:var(--cyan);font-size:33px;margin-top:6px}.level{margin:18px auto 0;display:inline-block;font-family:'Press Start 2P';font-size:13px;color:var(--green);text-shadow:2px 2px 0 #0b3b10}
-.subtitle{margin:18px auto 0;max-width:370px;border:3px solid var(--yellow);padding:12px 10px;color:var(--yellow);font-family:'Press Start 2P';font-size:8px;line-height:1.7;background:rgba(255,233,59,.06)}
-.credit{margin:16px auto 0;padding:13px 10px;border:3px solid var(--cyan);background:rgba(33,232,255,.08);font-family:'Press Start 2P';font-size:8px;line-height:1.7;box-shadow:0 0 18px rgba(33,232,255,.24)}
-.credit b{display:block;color:var(--pink);font-size:16px;text-shadow:2px 2px 0 #360043;margin-top:4px}.credit small{color:var(--green)}
-.screen{margin:10px 16px 16px;border:4px solid #6f78ff;background:linear-gradient(180deg,rgba(17,25,74,.96),rgba(6,8,30,.97));box-shadow:inset 0 0 28px rgba(0,0,0,.56);padding:18px;border-radius:13px;min-height:420px}.hidden{display:none!important}
-.intro{text-align:center}.avatar{width:102px;height:102px;margin:4px auto 14px;border:4px solid var(--green);background:linear-gradient(135deg,#ffe0b1,#8b4b2e);border-radius:18px;display:grid;place-items:center;font-size:52px;box-shadow:6px 6px 0 #06112e;animation:float 2.6s ease-in-out infinite}@keyframes float{50%{transform:translateY(-6px)}}
-.speech{background:#fff;color:#111;padding:13px;border:4px solid var(--cyan);font-weight:900;line-height:1.42;box-shadow:6px 6px 0 var(--pink);margin-bottom:18px}.mission{border:3px solid var(--purple);background:rgba(123,60,255,.16);padding:12px;margin:12px 0 18px;text-align:left;font-weight:800;line-height:1.45;color:#e6e8ff}.mission b{color:var(--yellow)}
-.btn{width:100%;border:0;margin:9px 0;padding:17px 12px;font-family:'Press Start 2P';font-size:10px;color:#fff;cursor:pointer;text-transform:uppercase;box-shadow:5px 5px 0 #030318;transition:.15s;line-height:1.45}.btn:hover{transform:translate(-2px,-2px);filter:brightness(1.14)}.btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #030318}.btn-start{background:var(--pink);border:3px solid #ff91df}.btn-help{background:#1685d8;border:3px solid var(--cyan)}.btn-score{background:#0ca731;border:3px solid var(--green)}.btn-reset{background:var(--orange);border:3px solid var(--yellow)}
-.game-top{display:flex;justify-content:space-between;gap:10px;font-family:'Press Start 2P';font-size:8px;color:var(--yellow);margin-bottom:14px}.bar{height:17px;border:3px solid var(--cyan);background:#070a22;margin:12px 0 18px}.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--yellow),var(--pink));transition:.35s}
-.badge{display:inline-block;font-family:'Press Start 2P';font-size:8px;color:#101010;background:var(--yellow);padding:7px 8px;border:2px solid #fff;box-shadow:3px 3px 0 var(--pink);margin-bottom:10px}.question{font-size:20px;line-height:1.25;font-weight:900;margin:10px 0 16px;color:#fff;text-shadow:2px 2px 0 #111}.answers{display:grid;gap:10px}.answer{background:#101a55;border:3px solid #6974ff;color:#fff;text-align:left;padding:14px 12px;font-weight:900;line-height:1.35;cursor:pointer;box-shadow:4px 4px 0 #020317}.answer:hover{border-color:var(--yellow);color:var(--yellow)}.answer.correct{background:#083d24;border-color:var(--green);color:var(--green)}.answer.wrong{background:#451122;border-color:var(--danger);color:#ffb1c1}.shake{animation:shake .35s linear}@keyframes shake{25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-5px)}}
-.feedback{margin-top:16px;padding:14px;border:3px solid var(--purple);background:rgba(123,60,255,.16);font-weight:900;line-height:1.45;color:#e5e5ff}.feedback b{color:var(--yellow)}
-.result{text-align:center}.trophy{font-size:66px;filter:drop-shadow(0 0 12px var(--yellow))}.result h2{font-family:'Press Start 2P';font-size:18px;line-height:1.5;color:var(--yellow);text-shadow:3px 3px 0 var(--pink)}.result p{font-weight:800;color:#e6e8ff;line-height:1.45}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}.stat{border:3px solid var(--cyan);padding:12px 8px;background:rgba(33,232,255,.08);font-family:'Press Start 2P';font-size:8px;line-height:1.6}.stat b{display:block;color:var(--green);font-size:14px;margin-top:6px}.achievement{border:3px solid var(--yellow);background:rgba(255,233,59,.08);padding:12px;margin:12px 0;font-family:'Press Start 2P';font-size:8px;line-height:1.7;color:var(--yellow)}
-.footer{padding:14px;text-align:center;border-top:4px solid #5965ff;background:#050617;font-family:'Press Start 2P';font-size:7.5px;color:var(--green);line-height:1.8}.footer span{color:var(--pink)}
-.modal{position:absolute;inset:0;background:rgba(0,0,0,.84);display:grid;place-items:center;padding:20px;z-index:20}.modal-card{border:4px solid var(--yellow);background:#090b27;padding:18px;box-shadow:8px 8px 0 var(--pink);line-height:1.55}.modal h3{font-family:'Press Start 2P';font-size:13px;color:var(--yellow);line-height:1.6}.modal p,.modal li{font-weight:800;color:#fff}.modal ul{padding-left:20px}
-@media(max-width:390px){h1{font-size:34px}h1 span{font-size:28px}.screen{padding:14px}.question{font-size:18px}.btn{font-size:9.5px}.hud{font-size:7.5px}.hud strong{font-size:9px}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Encuesta Comunitaria | Comunidad Chinanteca del Poblado Tres</title>
+  <style>
+    :root{--bg:#07111f;--bg2:#0d1b2a;--card:#10233d;--text:#f4f7fb;--muted:#b9c7d8;--cyan:#36c5f0;--blue:#4285f4;--green:#34a853;--yellow:#fbbc04;--shadow:0 24px 70px rgba(0,0,0,.35);--radius:26px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at top left,rgba(66,133,244,.35),transparent 32%),radial-gradient(circle at bottom right,rgba(52,168,83,.22),transparent 30%),linear-gradient(135deg,var(--bg),var(--bg2));color:var(--text);min-height:100vh;overflow-x:hidden}.wrap{width:min(980px,92vw);margin:auto;padding:34px 0 54px}header{text-align:center;padding:26px 0 22px}.badge{display:inline-flex;gap:8px;align-items:center;padding:9px 14px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:rgba(255,255,255,.06);color:var(--muted);font-size:13px}h1{font-size:clamp(34px,8vw,76px);line-height:.95;margin:22px 0 14px;letter-spacing:-2px}.grad{background:linear-gradient(90deg,var(--cyan),var(--blue),var(--green),var(--yellow));-webkit-background-clip:text;background-clip:text;color:transparent}.lead{font-size:clamp(16px,3.8vw,22px);color:var(--muted);max-width:760px;margin:0 auto;line-height:1.5}.notice{margin:24px auto 0;max-width:760px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:16px 18px;color:#dce8f8;line-height:1.45}.panel{margin-top:26px;background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.14);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}.progress{height:10px;background:rgba(255,255,255,.08)}.bar{height:100%;width:0%;background:linear-gradient(90deg,var(--cyan),var(--blue),var(--green),var(--yellow));transition:.35s ease}.content{padding:24px}.step{display:none;animation:up .35s ease}.step.active{display:block}@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}.count{color:var(--cyan);font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.12em}h2{font-size:clamp(24px,6vw,42px);margin:10px 0 10px;letter-spacing:-.8px}.hint{color:var(--muted);line-height:1.5;margin-bottom:18px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:18px}label.option{display:flex;gap:12px;align-items:center;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:16px;cursor:pointer;transition:.2s}label.option:hover{transform:translateY(-2px);background:rgba(255,255,255,.11)}input[type=radio],input[type=checkbox]{accent-color:#4285f4;transform:scale(1.25)}textarea{width:100%;min-height:130px;border:1px solid rgba(255,255,255,.16);border-radius:20px;background:rgba(255,255,255,.08);color:var(--text);padding:16px;font-size:16px;outline:none;resize:vertical}.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.scale label{text-align:center;padding:14px 8px;background:rgba(255,255,255,.07);border-radius:16px;border:1px solid rgba(255,255,255,.12);cursor:pointer}.services{display:grid;gap:16px}.service{background:rgba(0,0,0,.16);padding:16px;border-radius:20px;border:1px solid rgba(255,255,255,.10)}.service strong{display:block;margin-bottom:12px}.actions{display:flex;gap:12px;justify-content:space-between;margin-top:24px;flex-wrap:wrap}button{border:0;border-radius:999px;padding:15px 22px;font-weight:900;font-size:15px;cursor:pointer;color:#06101d;background:#fff;transition:.2s}button.primary{background:linear-gradient(90deg,var(--cyan),var(--blue));color:white}button.green{background:linear-gradient(90deg,var(--green),var(--yellow));color:#07111f}button:hover{transform:translateY(-2px)}button:disabled{opacity:.45;cursor:not-allowed;transform:none}.result{display:none;margin-top:22px;padding:18px;border-radius:22px;background:rgba(52,168,83,.14);border:1px solid rgba(52,168,83,.38)}.mini{font-size:13px;color:var(--muted);margin-top:14px}.footer{text-align:center;color:var(--muted);font-size:13px;margin-top:22px}.pillrow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}.pill{padding:8px 11px;border-radius:999px;background:rgba(255,255,255,.08);font-size:12px;color:#d8e5f5}
+  </style>
 </head>
 <body>
-<main class="arcade">
-  <div class="hud">
-    <div><span class="pink">1UP</span><strong id="scoreHud">000000</strong></div>
-    <div><span>LEVEL</span><strong>01</strong></div>
-    <div><span class="yellow">LIVES</span><strong id="livesHud">♥ ♥ ♥</strong></div>
+  <div class="wrap">
+    <header>
+      <div class="badge">Encuesta ciudadana · Sin nombres personales</div>
+      <h1><span class="grad">Comunidad Chinanteca</span><br>del Poblado Tres</h1>
+      <p class="lead">Queremos conocer qué nos gusta de nuestra comunidad, qué podemos mejorar y qué proyectos pueden fortalecer nuestro futuro.</p>
+      <div class="notice"><strong>Importante:</strong> esta encuesta no solicita nombres, direcciones ni datos personales. Responde con libertad y respeto.</div>
+      <div class="pillrow"><span class="pill">Identidad</span><span class="pill">Cultura</span><span class="pill">Servicios</span><span class="pill">Juventud</span><span class="pill">Futuro</span></div>
+    </header>
+    <main class="panel">
+      <div class="progress"><div class="bar" id="bar"></div></div>
+      <form class="content" id="survey">
+        <section class="step active"><div class="count">Pregunta 1 de 10</div><h2>¿En qué rango de edad te encuentras?</h2><p class="hint">Ayuda a entender la participación por generaciones.</p><div class="grid"><label class="option"><input name="edad" type="radio" value="Menos de 18"> Menos de 18 años</label><label class="option"><input name="edad" type="radio" value="18-25"> 18–25 años</label><label class="option"><input name="edad" type="radio" value="26-40"> 26–40 años</label><label class="option"><input name="edad" type="radio" value="41-60"> 41–60 años</label><label class="option"><input name="edad" type="radio" value="Más de 60"> Más de 60 años</label></div></section>
+        <section class="step"><div class="count">Pregunta 2 de 10</div><h2>¿Desde hace cuánto vives o participas en la comunidad?</h2><div class="grid"><label class="option"><input name="tiempo" type="radio" value="Toda mi vida"> Toda mi vida</label><label class="option"><input name="tiempo" type="radio" value="Más de 10 años"> Más de 10 años</label><label class="option"><input name="tiempo" type="radio" value="5 a 10 años"> 5 a 10 años</label><label class="option"><input name="tiempo" type="radio" value="Menos de 5 años"> Menos de 5 años</label><label class="option"><input name="tiempo" type="radio" value="Ya no vivo ahí, pero participo"> Ya no vivo ahí, pero participo</label></div></section>
+        <section class="step"><div class="count">Pregunta 3 de 10</div><h2>¿Qué es lo que más te gusta del Poblado Tres?</h2><textarea name="gusta" placeholder="Ejemplo: la gente, las tradiciones, la tranquilidad, la historia, la cultura..."></textarea></section>
+        <section class="step"><div class="count">Pregunta 4 de 10</div><h2>¿Qué tradiciones o costumbres debemos conservar?</h2><textarea name="tradiciones" placeholder="Escribe las tradiciones que consideres más importantes."></textarea></section>
+        <section class="step"><div class="count">Pregunta 5 de 10</div><h2>¿Qué tan seguido participas en actividades comunitarias?</h2><div class="grid"><label class="option"><input name="participacion" type="radio" value="Frecuentemente"> Frecuentemente</label><label class="option"><input name="participacion" type="radio" value="A veces"> A veces</label><label class="option"><input name="participacion" type="radio" value="Casi nunca"> Casi nunca</label><label class="option"><input name="participacion" type="radio" value="Me gustaría participar más"> Me gustaría participar más</label></div></section>
+        <section class="step"><div class="count">Pregunta 6 de 10</div><h2>Califica los servicios de la comunidad</h2><p class="hint">1 = muy mal, 5 = excelente.</p><div class="services"><div class="service"><strong>Calles y caminos</strong><div class="scale"><label><input type="radio" name="calles" value="1"><br>1</label><label><input type="radio" name="calles" value="2"><br>2</label><label><input type="radio" name="calles" value="3"><br>3</label><label><input type="radio" name="calles" value="4"><br>4</label><label><input type="radio" name="calles" value="5"><br>5</label></div></div><div class="service"><strong>Alumbrado público</strong><div class="scale"><label><input type="radio" name="alumbrado" value="1"><br>1</label><label><input type="radio" name="alumbrado" value="2"><br>2</label><label><input type="radio" name="alumbrado" value="3"><br>3</label><label><input type="radio" name="alumbrado" value="4"><br>4</label><label><input type="radio" name="alumbrado" value="5"><br>5</label></div></div><div class="service"><strong>Salud</strong><div class="scale"><label><input type="radio" name="salud" value="1"><br>1</label><label><input type="radio" name="salud" value="2"><br>2</label><label><input type="radio" name="salud" value="3"><br>3</label><label><input type="radio" name="salud" value="4"><br>4</label><label><input type="radio" name="salud" value="5"><br>5</label></div></div><div class="service"><strong>Seguridad</strong><div class="scale"><label><input type="radio" name="seguridad" value="1"><br>1</label><label><input type="radio" name="seguridad" value="2"><br>2</label><label><input type="radio" name="seguridad" value="3"><br>3</label><label><input type="radio" name="seguridad" value="4"><br>4</label><label><input type="radio" name="seguridad" value="5"><br>5</label></div></div></div></section>
+        <section class="step"><div class="count">Pregunta 7 de 10</div><h2>¿Cuál problema debería atenderse primero?</h2><textarea name="problema" placeholder="Escribe el problema principal y por qué."></textarea></section>
+        <section class="step"><div class="count">Pregunta 8 de 10</div><h2>¿Qué proyectos te gustaría que existieran?</h2><div class="grid"><label class="option"><input name="proyectos" type="checkbox" value="Deporte"> Deporte</label><label class="option"><input name="proyectos" type="checkbox" value="Cultura"> Cultura</label><label class="option"><input name="proyectos" type="checkbox" value="Tecnología"> Tecnología</label><label class="option"><input name="proyectos" type="checkbox" value="Medio ambiente"> Medio ambiente</label><label class="option"><input name="proyectos" type="checkbox" value="Emprendimiento"> Emprendimiento</label><label class="option"><input name="proyectos" type="checkbox" value="Talleres para jóvenes"> Talleres para jóvenes</label></div></section>
+        <section class="step"><div class="count">Pregunta 9 de 10</div><h2>¿Qué deberían aprender las nuevas generaciones sobre nuestra comunidad?</h2><textarea name="generaciones" placeholder="Historia, lengua, respeto, trabajo comunitario, tradiciones..."></textarea></section>
+        <section class="step"><div class="count">Pregunta 10 de 10</div><h2>Si pudieras mejorar una sola cosa, ¿qué mejorarías?</h2><textarea name="mejora" placeholder="Escribe tu propuesta principal."></textarea></section>
+        <section class="step"><div class="count">Final</div><h2>Gracias por participar</h2><p class="hint">Tus respuestas ayudan a imaginar una comunidad más organizada, participativa y fuerte.</p><div class="result" id="result"></div><p class="mini">Las respuestas se guardan en este dispositivo como respaldo local. Para recopilar respuestas reales en línea, se puede conectar después con Google Sheets o Formspree.</p></section>
+        <div class="actions"><button type="button" id="prev">Atrás</button><button type="button" class="primary" id="next">Siguiente</button><button type="submit" class="green" id="send" style="display:none">Enviar respuesta</button></div>
+      </form>
+    </main>
+    <div class="footer">Proyecto ciudadano · Comunidad Chinanteca del Poblado Tres</div>
   </div>
-
-  <section class="hero">
-    <span class="star s1">+</span><span class="star s2">✦</span><span class="star s3">+</span>
-    <h1>QA <span>TESTING</span></h1>
-    <div class="level">★ NIVEL 1: FUNDAMENTOS ★</div>
-    <div class="subtitle">ENTRENA TU CRITERIO QA, DETECTA BUGS Y SUPERA EL PRIMER NIVEL</div>
-    <div class="credit">JUEGO CREADO POR:<b>NARCISO</b><small>QA TESTER · CREADOR · HECHO CON PASIÓN POR EL TESTING</small></div>
-  </section>
-
-  <section class="screen">
-    <div id="intro" class="intro">
-      <div class="avatar">👨‍💻</div>
-      <div class="speech">Hola, Tester. Soy QA-BOT. Tu misión es proteger el lanzamiento detectando errores antes que lleguen al usuario.</div>
-      <div class="mission"><b>Historia:</b> CyberSoft está por liberar una app. Si respondes bien, eliminas bugs. Si fallas, pierdes vidas. Completa el nivel y gana tu rango QA.</div>
-      <button class="btn btn-start" onclick="startGame()">▶ Jugar nivel 1</button>
-      <button class="btn btn-help" onclick="showHelp()">🏆 Cómo jugar</button>
-      <button class="btn btn-score" onclick="showScores()">📊 Rangos QA</button>
-    </div>
-
-    <div id="game" class="hidden">
-      <div class="game-top"><div id="qCounter">PREGUNTA 1/10</div><div id="coins">XP 000</div></div>
-      <div class="bar"><span id="progress"></span></div>
-      <div id="badge" class="badge">BUG FUNCIONAL</div>
-      <div id="question" class="question"></div>
-      <div id="answers" class="answers"></div>
-      <div id="feedback" class="feedback hidden"></div>
-      <button id="nextBtn" class="btn btn-start hidden" onclick="nextQuestion()">Siguiente ▶</button>
-    </div>
-
-    <div id="result" class="result hidden">
-      <div class="trophy">🏆</div>
-      <h2 id="resultTitle">MISIÓN COMPLETADA</h2>
-      <p id="resultText"></p>
-      <div id="achievement" class="achievement"></div>
-      <div class="stats">
-        <div class="stat">PUNTAJE<b id="finalScore">0</b></div>
-        <div class="stat">ACIERTOS<b id="finalCorrect">0/10</b></div>
-      </div>
-      <button class="btn btn-start" onclick="startGame()">Reintentar</button>
-      <button class="btn btn-reset" onclick="backHome()">Menú</button>
-    </div>
-  </section>
-
-  <footer class="footer">© 2026 <span>NARCISO</span> | TODOS LOS DERECHOS RESERVADOS<br>INSERT COIN · QA MODE ON</footer>
-
-  <div id="modal" class="modal hidden" onclick="hideModal(event)">
-    <div class="modal-card">
-      <h3 id="modalTitle">CÓMO JUGAR</h3>
-      <div id="modalContent"></div>
-      <button class="btn btn-start" onclick="closeModal()">Cerrar</button>
-    </div>
-  </div>
-</main>
-
 <script>
-const questions=[
-  {type:'BUG CONCEPTUAL',q:'¿Qué es QA?',a:['Una fase para decorar una app','Aseguramiento de calidad del producto','Un lenguaje de programación'],c:1,e:'QA significa Quality Assurance: asegurar que el producto cumpla criterios de calidad antes de llegar al usuario.'},
-  {type:'BUG FUNCIONAL',q:'¿Qué es un bug?',a:['Un error o comportamiento incorrecto','Una mejora visual','Una contraseña'],c:0,e:'Un bug es un defecto que provoca que el sistema no se comporte como se esperaba.'},
-  {type:'TEST CASE',q:'¿Qué debe tener un caso de prueba?',a:['Solo capturas bonitas','Pasos, datos, resultado esperado y resultado actual','Únicamente el nombre del tester'],c:1,e:'Un buen test case documenta pasos claros, datos, expected behavior, actual behavior y evidencia.'},
-  {type:'EXPECTED BEHAVIOR',q:'¿Qué significa expected behavior?',a:['Lo que el sistema debería hacer','Lo que el tester imagina','Lo que pasa al azar'],c:0,e:'Expected behavior es el comportamiento esperado según requerimiento, criterio de aceptación o diseño aprobado.'},
-  {type:'EVIDENCIA QA',q:'Si una prueba falla, ¿qué haces primero?',a:['Borrar evidencia','Registrar evidencia y describir el fallo','Ignorar el problema'],c:1,e:'La evidencia permite reproducir, analizar y corregir el defecto con contexto técnico.'},
-  {type:'SEVERIDAD',q:'¿Qué es severidad?',a:['Impacto técnico o funcional del bug','Color del botón','Cantidad de testers'],c:0,e:'Severidad mide cuánto afecta el defecto al producto, al negocio o al usuario.'},
-  {type:'PRIORIDAD',q:'¿Qué es prioridad?',a:['Urgencia para corregir un bug','El tamaño de pantalla','El idioma de la app'],c:0,e:'Prioridad define qué tan pronto debe atenderse un defecto dentro del flujo de trabajo.'},
-  {type:'EVIDENCIA',q:'¿Cuál es una buena evidencia QA?',a:['Video, capturas, pasos y datos usados','Un comentario sin contexto','Solo decir “no sirve”'],c:0,e:'La evidencia debe permitir entender y reproducir el comportamiento sin adivinar.'},
-  {type:'REGRESIÓN',q:'¿Qué es una prueba de regresión?',a:['Validar que cambios nuevos no rompieron funciones existentes','Cambiar el diseño completo','Eliminar bugs sin probar'],c:0,e:'La regresión confirma que lo que antes funcionaba sigue funcionando después de un cambio.'},
-  {type:'REPRODUCCIÓN',q:'¿Qué hace fuerte a un reporte de bug?',a:['Que tenga pasos reproducibles, ambiente, evidencia e impacto','Que sea muy corto y sin detalles','Que culpe a alguien'],c:0,e:'Un reporte fuerte explica cómo reproducir el defecto, dónde ocurre, evidencia, impacto y resultado esperado.'}
-];
-let index=0,lives=3,score=0,correct=0,locked=false;
-function $(id){return document.getElementById(id)}
-function pad(n){return String(n).padStart(6,'0')}
-function updateHud(){
-  $('scoreHud').textContent=pad(score);
-  $('livesHud').textContent='♥ '.repeat(lives).trim()||'GAME OVER';
-  if($('coins'))$('coins').textContent='XP '+String(score).padStart(3,'0');
-}
-function startGame(){
-  index=0;lives=3;score=0;correct=0;locked=false;
-  $('intro').classList.add('hidden');$('result').classList.add('hidden');$('game').classList.remove('hidden');
-  updateHud();renderQuestion();
-}
-function renderQuestion(){
-  locked=false;let item=questions[index];
-  $('qCounter').textContent=`PREGUNTA ${index+1}/${questions.length}`;
-  $('progress').style.width=(index/questions.length*100)+'%';
-  $('badge').textContent=item.type;
-  $('question').textContent=item.q;
-  $('feedback').classList.add('hidden');$('nextBtn').classList.add('hidden');
-  let box=$('answers');box.innerHTML='';
-  item.a.forEach((text,i)=>{
-    let b=document.createElement('button');
-    b.className='answer';b.textContent=text;b.onclick=()=>choose(i,b);box.appendChild(b);
-  });
-}
-function choose(i,btn){
-  if(locked)return;locked=true;let item=questions[index];
-  [...document.querySelectorAll('.answer')].forEach((b,k)=>{
-    if(k===item.c)b.classList.add('correct');
-    if(k===i&&k!==item.c)b.classList.add('wrong');
-    b.disabled=true;
-  });
-  if(i===item.c){
-    score+=100;correct++;$('feedback').innerHTML='<b>¡BUG ELIMINADO!</b><br>'+item.e;
-  }else{
-    lives--;$('livesHud').classList.add('shake');setTimeout(()=>$('livesHud').classList.remove('shake'),400);
-    $('feedback').innerHTML='<b>EL BUG SOBREVIVIÓ.</b><br>'+item.e;
-  }
-  updateHud();$('feedback').classList.remove('hidden');$('nextBtn').classList.remove('hidden');
-  $('nextBtn').textContent=lives<=0?'Ver resultado ▶':'Siguiente ▶';
-}
-function nextQuestion(){
-  if(lives<=0||index===questions.length-1){endGame();return}
-  index++;renderQuestion();
-}
-function endGame(){
-  $('progress').style.width='100%';$('game').classList.add('hidden');$('result').classList.remove('hidden');
-  $('finalScore').textContent=score;$('finalCorrect').textContent=correct+'/'+questions.length;
-  let pct=correct/questions.length;
-  if(lives<=0){
-    $('resultTitle').textContent='GAME OVER';
-    $('resultText').textContent='Perdiste tus 3 vidas, pero ya entrenaste conceptos clave. Reinicia y supera el nivel.';
-    $('achievement').textContent='RANGO: QA TRAINEE · MODO PRÁCTICA';
-  }else if(pct===1){
-    $('resultTitle').textContent='QA LEGENDARIO';
-    $('resultText').textContent='Perfect score. Completaste el Nivel 1 sin dejar bugs vivos.';
-    $('achievement').textContent='LOGRO DESBLOQUEADO: PERFECT SCORE';
-  }else if(pct>=.8){
-    $('resultTitle').textContent='QA SENIOR ARCADE';
-    $('resultText').textContent='Excelente dominio de fundamentos. Estás listo para subir de nivel.';
-    $('achievement').textContent='LOGRO DESBLOQUEADO: BUG HUNTER';
-  }else if(pct>=.6){
-    $('resultTitle').textContent='QA MID LEVEL';
-    $('resultText').textContent='Buen avance. Refuerza severidad, prioridad, evidencia y expected behavior.';
-    $('achievement').textContent='RANGO: TESTER EN PROGRESO';
-  }else{
-    $('resultTitle').textContent='QA JUNIOR';
-    $('resultText').textContent='Completaste el intento. Repasa conceptos base y vuelve a intentarlo.';
-    $('achievement').textContent='RANGO: ENTRENAMIENTO ACTIVO';
-  }
-}
-function backHome(){
-  $('game').classList.add('hidden');$('result').classList.add('hidden');$('intro').classList.remove('hidden');updateHud();
-}
-function showHelp(){
-  $('modalTitle').textContent='CÓMO JUGAR';
-  $('modalContent').innerHTML='<ul><li>Responde 10 preguntas básicas de QA.</li><li>Tienes 3 vidas.</li><li>Cada respuesta correcta suma 100 XP.</li><li>Si respondes bien, eliminas bugs.</li><li>Si respondes mal, el bug sobrevive y pierdes una vida.</li></ul>';
-  $('modal').classList.remove('hidden');
-}
-function showScores(){
-  $('modalTitle').textContent='RANGOS QA';
-  $('modalContent').innerHTML='<p>Ranking arcade:</p><ul><li>10 aciertos: QA Legendario</li><li>8–9 aciertos: QA Senior Arcade</li><li>6–7 aciertos: QA Mid Level</li><li>4–5 aciertos: QA Junior</li><li>0–3 aciertos: QA Trainee</li></ul>';
-  $('modal').classList.remove('hidden');
-}
-function closeModal(){$('modal').classList.add('hidden')}
-function hideModal(e){if(e.target.id==='modal')closeModal()}
-updateHud();
+const steps=[...document.querySelectorAll('.step')];let current=0;const bar=document.getElementById('bar'),prev=document.getElementById('prev'),next=document.getElementById('next'),send=document.getElementById('send'),form=document.getElementById('survey'),result=document.getElementById('result');function show(){steps.forEach((s,i)=>s.classList.toggle('active',i===current));bar.style.width=(current/(steps.length-1))*100+'%';prev.disabled=current===0;next.style.display=current>=steps.length-2?'none':'inline-block';send.style.display=current===steps.length-2?'inline-block':'none';if(current===steps.length-1){prev.style.display='none';next.style.display='none';send.style.display='none'}}next.onclick=()=>{if(current<steps.length-1){current++;show();scrollTo({top:0,behavior:'smooth'})}};prev.onclick=()=>{if(current>0){current--;show();scrollTo({top:0,behavior:'smooth'})}};form.onsubmit=(e)=>{e.preventDefault();const data=new FormData(form);const obj={fecha:new Date().toLocaleString('es-MX')};for(const [k,v] of data.entries()){obj[k]=obj[k]?obj[k]+', '+v:v}const saved=JSON.parse(localStorage.getItem('encuesta_poblado_tres')||'[]');saved.push(obj);localStorage.setItem('encuesta_poblado_tres',JSON.stringify(saved));current=steps.length-1;result.style.display='block';result.innerHTML='<strong>Respuesta registrada en este dispositivo.</strong><br>Gracias por aportar tu voz a la comunidad.';show();scrollTo({top:0,behavior:'smooth'})};show();
 </script>
 </body>
 </html>
