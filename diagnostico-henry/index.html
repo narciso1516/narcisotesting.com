@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Diagnóstico de Inglés | Henry Sánchez Hilario</title>
+<style>
+:root{--ink:#123047;--bg:#f5fbf8;--card:#fff;--p:#0f766e;--p2:#14b8a6;--a:#f59e0b;--soft:#dff7f1;--line:#cbe7df;--bad:#b91c1c;--ok:#166534}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(135deg,#eefbf7,#fff8e8);color:var(--ink)}
+header{background:linear-gradient(135deg,var(--p),#115e59);color:#fff;padding:30px 20px}.wrap{max-width:1120px;margin:auto}.hero{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}.badge{background:#ffffff20;border:1px solid #ffffff40;border-radius:999px;padding:8px 12px;display:inline-block;font-size:.9rem}h1{margin:12px 0 8px;font-size:clamp(2rem,5vw,3.8rem);line-height:1}.sub{opacity:.92;max-width:720px}.avatar{width:118px;height:118px;border-radius:30px;background:#fff3;display:grid;place-items:center;font-size:58px;border:1px solid #fff5}
+main{padding:26px 18px 60px}.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:0 18px 45px #0f766e12;padding:22px;margin:18px 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.stat{background:var(--soft);border-radius:16px;padding:16px}.stat b{font-size:1.35rem}.progress{height:12px;background:#e7f2ee;border-radius:999px;overflow:hidden}.progress>i{display:block;height:100%;background:linear-gradient(90deg,var(--p2),var(--a));width:0;transition:.4s}.topic{border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0}.topic h3{margin:0 0 12px}.options{display:grid;gap:9px}.opt{display:flex;gap:10px;align-items:flex-start;padding:11px;border:1px solid #d8ebe5;border-radius:12px;cursor:pointer}.opt:hover{background:#f4fbf9}.opt input{margin-top:3px}.skills{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}.skill{padding:10px;border:1px dashed var(--p2);border-radius:12px;text-align:center;font-size:.9rem}.actions{display:flex;gap:10px;flex-wrap:wrap;position:sticky;bottom:12px;background:#ffffffdd;backdrop-filter:blur(10px);padding:12px;border-radius:16px;border:1px solid var(--line)}button{border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer}.primary{background:var(--p);color:#fff}.secondary{background:#e6f5f1;color:var(--p)}.warn{background:#fff4d6;color:#8a5200}.report{display:none}.report.show{display:block}.bar{height:10px;border-radius:999px;background:#e8efed;overflow:hidden}.bar span{display:block;height:100%;background:var(--p2)}textarea,input[type=text]{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit}.note{font-size:.9rem;color:#4c6778}.footer{text-align:center;color:#5c7280;padding:24px}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#fff0c7;color:#8b5600;font-size:.82rem;font-weight:700}
+@media(max-width:760px){.hero{grid-template-columns:1fr}.avatar{display:none}.grid,.skills{grid-template-columns:1fr 1fr}.panel{padding:16px}}
+@media print{header,.actions,.no-print{display:none!important}body{background:#fff}.panel{box-shadow:none}.report{display:block}.topic{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header><div class="wrap hero"><div><span class="badge">Evaluación diagnóstica interactiva</span><h1>Henry Sánchez Hilario</h1><p class="sub">Diagnóstico de inglés · Segundo semestre · Lectura, escritura, escucha y expresión oral</p></div><div class="avatar">🧑‍🎓</div></div></header>
+<main class="wrap">
+<section class="panel">
+<div class="grid"><div class="stat"><span>Progreso</span><br><b id="pct">0%</b><div class="progress"><i id="prog"></i></div></div><div class="stat"><span>Reactivos</span><br><b><span id="answered">0</span>/15</b></div><div class="stat"><span>Guardado</span><br><b id="saved">Automático</b></div></div>
+<p class="note">Selecciona la respuesta que mejor represente lo que Henry sabe actualmente. La opción “No lo sé todavía” permite detectar áreas que requieren acompañamiento.</p>
+</section>
+<form id="quiz"></form>
+<section class="panel no-print">
+<h2>Estilo de aprendizaje</h2><p>¿Cómo aprende mejor Henry?</p>
+<div class="options" id="styleBox">
+<label class="opt"><input type="radio" name="learningStyle" value="Visual"> Con imágenes, colores, mapas y ejemplos visuales.</label>
+<label class="opt"><input type="radio" name="learningStyle" value="Auditivo"> Escuchando explicaciones, canciones y conversaciones.</label>
+<label class="opt"><input type="radio" name="learningStyle" value="Práctico"> Haciendo ejercicios, juegos y actividades.</label>
+<label class="opt"><input type="radio" name="learningStyle" value="Mixto"> Combinando diferentes formas de aprendizaje.</label>
+</div>
+<label><b>Observaciones del profesor</b><textarea id="notes" rows="4" placeholder="Escribe aquí observaciones relevantes..."></textarea></label>
+</section>
+<div class="actions"><button class="primary" type="button" onclick="buildReport()">Generar reporte</button><button class="secondary" type="button" onclick="window.print()">Descargar / imprimir PDF</button><button class="warn" type="button" onclick="resetAll()">Reiniciar</button></div>
+<section class="panel report" id="report"><h2>Reporte diagnóstico de Henry</h2><div id="summary"></div></section>
+</main><div class="footer">Diseñado para el seguimiento académico personalizado de Henry Sánchez Hilario.</div>
+<script>
+const topics=[
+['Verb to be','Choose the correct sentence:','She is my friend.','She are my friend.','She am my friend.','Gramática'],
+['Personal information','Complete: My name ___ Henry.','is','are','am','Escritura'],
+['Family vocabulary','What does “mother” mean?','Mamá','Hermano','Tía','Vocabulario'],
+['Numbers and age','How do you say “Tengo 14 años”?','I am 14 years old.','I have 14 years.','I is 14.','Expresión oral'],
+['Daily routines','Choose the correct sentence:','I wake up at seven.','I wakes up at seven.','I waking at seven.','Gramática'],
+['Simple present','He ___ soccer on Saturdays.','plays','play','playing','Gramática'],
+['School objects','Which word means “cuaderno”?','Notebook','Window','Chair','Vocabulario'],
+['There is / There are','___ two books on the desk.','There are','There is','It are','Gramática'],
+['Prepositions of place','The book is ___ the table.','on','at','from','Lectura'],
+['Can / cannot','Choose the correct sentence:','I can swim.','I can to swim.','I cans swim.','Gramática'],
+['Likes and dislikes','Choose the correct sentence:','I like music.','I likes music.','I liking music.','Expresión oral'],
+['Present continuous','She ___ reading now.','is','are','am','Gramática'],
+['Wh- questions','___ is your favorite color?','What','Where','When','Lectura'],
+['Listening comprehension','El profesor lee: “Henry goes to school by bus.” ¿Cómo va Henry?','En autobús','Caminando','En bicicleta','Escucha'],
+['Short writing','Choose the best complete sentence:','My favorite subject is English because it is interesting.','Favorite English interesting.','Subject my is English.','Escritura']
+];
+const quiz=document.getElementById('quiz');
+topics.forEach((t,i)=>{quiz.insertAdjacentHTML('beforeend',`<section class="panel topic"><span class="pill">Tema ${i+1}</span><h3>${t[0]}</h3><p>${t[1]}</p><div class="options">${[t[2],t[3],t[4],'No lo sé todavía'].map((x,j)=>`<label class="opt"><input type="radio" name="q${i}" value="${j}" onchange="save()"> ${x}</label>`).join('')}</div><div class="skills"><div class="skill">Área<br><b>${t[5]}</b></div><div class="skill">Lectura 📖</div><div class="skill">Escucha 🎧</div><div class="skill">Expresión 🗣️</div></div></section>`) });
+function save(){const data={};new FormData(document.querySelector('main')).forEach((v,k)=>data[k]=v);data.notes=notes.value;localStorage.setItem('diagHenry',JSON.stringify(data));update();saved.textContent='Guardado ✓'}
+function load(){const d=JSON.parse(localStorage.getItem('diagHenry')||'{}');Object.entries(d).forEach(([k,v])=>{if(k==='notes')notes.value=v;else{const e=document.querySelector(`[name="${k}"][value="${v}"]`);if(e)e.checked=true}});update()}
+function update(){let n=0;topics.forEach((_,i)=>{if(document.querySelector(`[name=q${i}]:checked`))n++});answered.textContent=n;pct.textContent=Math.round(n/15*100)+'%';prog.style.width=(n/15*100)+'%'}
+function buildReport(){let correct=0,unknown=0,areas={};topics.forEach((t,i)=>{const e=document.querySelector(`[name=q${i}]:checked`);if(!e)return;areas[t[5]]??={ok:0,total:0};areas[t[5]].total++;if(e.value==='0'){correct++;areas[t[5]].ok++}if(e.value==='3')unknown++});const completed=[...document.querySelectorAll('#quiz input:checked')].length;const level=correct>=13?'Avanzado':correct>=10?'Satisfactorio':correct>=6?'En desarrollo':'Requiere acompañamiento';summary.innerHTML=`<p><b>Resultado general:</b> ${correct}/15 respuestas correctas. <b>Nivel:</b> ${level}.</p><p><b>Reactivos respondidos:</b> ${completed}/15 · <b>“No lo sé todavía”:</b> ${unknown}</p>${Object.entries(areas).map(([a,v])=>`<p><b>${a}:</b> ${v.ok}/${v.total}<div class="bar"><span style="width:${v.total?v.ok/v.total*100:0}%"></span></div></p>`).join('')}<p><b>Estilo de aprendizaje:</b> ${document.querySelector('[name=learningStyle]:checked')?.value||'No indicado'}</p><p><b>Observaciones:</b> ${notes.value||'Sin observaciones adicionales.'}</p><h3>Recomendación</h3><p>${correct>=10?'Continuar con actividades comunicativas, lectura breve y práctica oral semanal.':'Reforzar vocabulario básico, estructuras del presente simple y comprensión de instrucciones cortas mediante ejercicios visuales y prácticos.'}</p>`;report.classList.add('show');report.scrollIntoView({behavior:'smooth'});save()}
+function resetAll(){if(confirm('¿Deseas borrar todo el progreso de Henry?')){localStorage.removeItem('diagHenry');location.reload()}}
+document.querySelectorAll('[name=learningStyle]').forEach(e=>e.onchange=save);notes.oninput=save;load();
+</script>
+</body></html>
